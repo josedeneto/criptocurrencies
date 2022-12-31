@@ -29,8 +29,16 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
       );
     } else {
-     return AppBar(
+      return AppBar(
+        backgroundColor: Colors.indigo.shade50,
+        iconTheme: const IconThemeData(color: Colors.indigo),
         elevation: 0,
+        centerTitle: true,
+        title: Text(
+          '${selectedItem.length} selecionadas',
+          style: const TextStyle(
+              fontWeight: FontWeight.w500, fontSize: 17, color: Colors.indigo),
+        ),
         leading: IconButton(
           onPressed: () {
             setState(() {
@@ -83,6 +91,11 @@ class _HomePageState extends State<HomePage> {
           itemCount: coin.dataCoins.length,
         ),
       ),
+      floatingActionButton:selectedItem.isNotEmpty? FloatingActionButton.extended(
+        onPressed: () {},
+        icon: const Icon(Icons.star),
+        label: const Text('Favoritar'),
+      ):null,
     );
   }
 }
