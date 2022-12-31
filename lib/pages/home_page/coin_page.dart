@@ -20,7 +20,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text(
           'Criptocurrencies',
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 17,
+          ),
         ),
         centerTitle: true,
         elevation: 0,
@@ -28,18 +31,19 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.separated(
-
           physics: const BouncingScrollPhysics(),
           itemBuilder: (_, index) => ListTile(
-            selected: false,
-            
-            leading: Image(
-              image: AssetImage(
-                coin.dataCoins[index].icon,
-              ),
-              width: 40,
-              height: 40,
-            ),
+            selected: selectedItem.contains(coin.dataCoins[index]),
+            selectedTileColor: const Color.fromARGB(255, 180, 188, 238),
+            leading: selectedItem.contains(coin.dataCoins[index])
+                ? const CircleAvatar(child: Icon(Icons.check_circle))
+                : Image(
+                    image: AssetImage(
+                      coin.dataCoins[index].icon,
+                    ),
+                    width: 40,
+                    height: 40,
+                  ),
             title: Text(
               coin.dataCoins[index].name,
             ),
@@ -47,11 +51,13 @@ class _HomePageState extends State<HomePage> {
               formatCurrency.format(coin.dataCoins[index].price),
             ),
             onLongPress: () {
-              setState(() {
-                selectedItem.contains(coin.dataCoins[index])
-                    ? selectedItem.remove(coin.dataCoins[index])
-                    : selectedItem.add(coin.dataCoins[index]);
-              });
+              setState(
+                () {
+                  selectedItem.contains(coin.dataCoins[index])
+                      ? selectedItem.remove(coin.dataCoins[index])
+                      : selectedItem.add(coin.dataCoins[index]);
+                },
+              );
             },
           ),
           separatorBuilder: (_, __) => const Divider(),
