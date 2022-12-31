@@ -14,10 +14,10 @@ class _HomePageState extends State<HomePage> {
   var coin = CoinsRepository();
   final formatCurrency = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
   List<CoinModel> selectedItem = [];
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+
+  appBar() {
+    if (selectedItem.isEmpty) {
+      return AppBar(
         title: const Text(
           'Criptocurrencies',
           style: TextStyle(
@@ -27,7 +27,26 @@ class _HomePageState extends State<HomePage> {
         ),
         centerTitle: true,
         elevation: 0,
-      ),
+      );
+    } else {
+     return AppBar(
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            setState(() {
+              selectedItem = [];
+            });
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.separated(
